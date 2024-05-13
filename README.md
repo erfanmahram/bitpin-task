@@ -1,1 +1,3 @@
 # bitpin-task
+## In this task, I implemented a Django application that has two models named Post and Rating to manage posts and their ratings. The requirement was to show list of posts with their average rating and count of rating, and also to rate a post. All methods and classes have Docstring that explain their part.
+* To prevent Too many requests problem in the project, I used throttle rate limit for whole project and set it in the env file. I also set login_required decorator for Rating view to make users to login before they can rate a post.
