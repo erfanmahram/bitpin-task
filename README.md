@@ -10,20 +10,25 @@ Bitpin Technical Task
 
 1. Clone this repository to your local machine
 
-2. Create and activate a virtual environment based on your OS:
+2. If You want to use docker, skip steps 3 to 5 and if don't skip this step. To run with docker:
+```shell
+docker-compose up -d
+```
+
+3. Create and activate a virtual environment based on your OS:
 
 ```shell
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-3. Install project dependencies:
+4. Install project dependencies:
 
 ```shell
 pip install -r requirements.txt
 ```
 
-4. Apply database migration commands:
+5. Apply database migration commands:
 
 ```shell
 python manage.py makemigrations
@@ -66,5 +71,5 @@ python manage.py migrate
   - `400 Bad Request`
   - `302 Redirect`: If user is not logged in
 
-## Solution
+## My solution to prevent too many requests 
 To solve the problem of too many requests, I used login_required decorator to force the user to login for rating a post and also set throttle to limit the number of requests per minute.
