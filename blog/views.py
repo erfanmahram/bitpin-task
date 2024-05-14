@@ -33,19 +33,25 @@ class RatePostView(APIView):
         post_id = kwargs.get('post_id')
         rating_value = request.data.get('rating')
         user = request.user
-
-        # Check if the user has already rated the post
-        rating, created = Rating.objects.get_or_create(
+        rating_instance, created = Rating.objects.get_or_create(
             user=user,
-            post_id=post_id, defaults={"rating": rating_value}
-            )
+            post_id=post_id,
+            defaults={"rating": rating_value},
+        )
 
-        # If the rating already exists, update the existing rating
-        if not created:
-            rating.rating = rating_value
-            rating.save()
+        # Create or update the rating object using the serializer
+        serializer = RatingSerializer(
+            instance=rating_instance,
+            data={
+                "user": user.id,
+                "rating": rating_value,
+                "post": post_id,
+            },
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
         return Response(
-            RatingSerializer(rating).data,
+            serializer.data,
             status=status.HTTP_201_CREATED if created else status.HTTP_200_OK
             )

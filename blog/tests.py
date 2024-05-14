@@ -16,6 +16,12 @@ class PostTest(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
 
+    def test_get_post_list_rated_post(self):
+        Post.objects.create(title='Test Post 2', content='Test Content 2')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 2)
+
 
 class RatePostViewTestCase(APITestCase):
     def setUp(self):
@@ -41,4 +47,3 @@ class RatePostViewTestCase(APITestCase):
     def test_rate_post_not_login(self):
         response = self.client.post(self.url, {'rating': 3}, format='json')
         self.assertEqual(response.status_code, 302)
-

@@ -39,7 +39,7 @@ class PostSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super().to_representation(instance)
         if 'user_rating' in data and data['user_rating'] is None:
-            del data['user_rating']
+            data.pop('user_rating')
         return data
 
 
